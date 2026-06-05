@@ -6,6 +6,16 @@ export default defineConfig({
   base: '/',
   build: {
     assetsDir: '',
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        passes: 2,
+        drop_console: true,
+      },
+      mangle: {
+        toplevel: true,
+      },
+    },
     rollupOptions: {
       output: {
         entryFileNames: `[name]-[hash].js`,
