@@ -176,7 +176,7 @@ export default function AkreditasyonPage() {
   useEffect(() => {
     const fetchVerileri = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/accreditations`);
+        const response = await fetch(`/api/accreditations`);
         const data = await response.json();
         setPrograms(data);
       } catch (error) {

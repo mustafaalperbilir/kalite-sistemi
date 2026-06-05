@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL || '';
-
 const AdminPanel = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('banu_jwt_token') !== null;
@@ -33,7 +31,7 @@ const AdminPanel = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}/api/login`, {
+      const response = await fetch(`/api/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -71,7 +69,9 @@ const AdminPanel = () => {
     
     const loadData = async () => {
       try {
-        const response = await fetch(`${API_URL}/api/accreditations`);
+        const response = await fetch(`/api/accreditations`, {
+          headers: getAuthHeaders()
+        });
         const data = await response.json();
         setAccreditations(data);
       } catch (error) {
@@ -94,7 +94,7 @@ const AdminPanel = () => {
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_URL}/api/update-profile`, {
+      const response = await fetch(`/api/update-profile`, {
         method: 'PUT',
         headers: getAuthHeaders(),
         body: JSON.stringify(profileForm)
@@ -160,7 +160,7 @@ const AdminPanel = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Bu kaydı tamamen silmek istediğinize emin misiniz?')) {
       try {
-        const response = await fetch(`${API_URL}/api/accreditations/${id}`, {
+        const response = await fetch(`/api/accreditations/${id}`, {
           method: 'DELETE',
           headers: getAuthHeaders(),
         });
