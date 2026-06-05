@@ -66,7 +66,7 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
-app.put('/api/update-profile', authenticateToken, async (req, res) => {
+const updateProfileHandler = async (req, res) => {
   const { new_username, new_password, old_password } = req.body;
   const userId = req.user.id;
 
@@ -100,7 +100,10 @@ app.put('/api/update-profile', authenticateToken, async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Profil güncellenirken sunucu hatası oluştu.' });
   }
-});
+};
+
+app.put('/api/update-profile', authenticateToken, updateProfileHandler);
+app.post('/api/update-profile/post', authenticateToken, updateProfileHandler);
 
 // --- AKREDİTASYON CRUD ROTARI ---
 app.get('/api/accreditations', async (req, res) => {
@@ -125,7 +128,7 @@ app.post('/api/accreditations', authenticateToken, async (req, res) => {
   }
 });
 
-app.put('/api/accreditations/:id', authenticateToken, async (req, res) => {
+const updateAccreditation = async (req, res) => {
   try {
     const { id } = req.params;
     const { program_name, accreditation_type, date_info, status } = req.body;
@@ -137,9 +140,11 @@ app.put('/api/accreditations/:id', authenticateToken, async (req, res) => {
   } catch (err) {
     res.status(500).send("Sunucu hatası");
   }
-});
+};
+app.put('/api/accreditations/:id', authenticateToken, updateAccreditation);
+app.post('/api/accreditations/:id/update', authenticateToken, updateAccreditation);
 
-app.delete('/api/accreditations/:id', authenticateToken, async (req, res) => {
+const deleteAccreditation = async (req, res) => {
   try {
     const { id } = req.params;
     await pool.query("DELETE FROM accreditations WHERE id = $1", [id]);
@@ -147,7 +152,9 @@ app.delete('/api/accreditations/:id', authenticateToken, async (req, res) => {
   } catch (err) {
     res.status(500).send("Sunucu hatası");
   }
-});
+};
+app.delete('/api/accreditations/:id', authenticateToken, deleteAccreditation);
+app.post('/api/accreditations/:id/delete', authenticateToken, deleteAccreditation);
 
 app.listen(PORT, () => {
   console.log(`Sunucu ${PORT} portunda tam korumalı profil ayarlarıyla çalışıyor`);

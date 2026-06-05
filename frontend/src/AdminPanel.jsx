@@ -94,8 +94,8 @@ const AdminPanel = () => {
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/update-profile`, {
-        method: 'PUT',
+      const response = await fetch(`/api/update-profile/post`, {
+        method: 'POST',
         headers: getAuthHeaders(),
         body: JSON.stringify(profileForm)
       });
@@ -133,8 +133,8 @@ const AdminPanel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = editId ? `/api/accreditations/${editId}` : `/api/accreditations`;
-      const method = editId ? 'PUT' : 'POST';
+      const url = editId ? `/api/accreditations/${editId}/update` : `/api/accreditations`;
+      const method = 'POST';
 
       const response = await fetch(url, {
         method: method,
@@ -160,8 +160,8 @@ const AdminPanel = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Bu kaydı tamamen silmek istediğinize emin misiniz?')) {
       try {
-        const response = await fetch(`/api/accreditations/${id}`, {
-          method: 'DELETE',
+        const response = await fetch(`/api/accreditations/${id}/delete`, {
+          method: 'POST',
           headers: getAuthHeaders(),
         });
 
