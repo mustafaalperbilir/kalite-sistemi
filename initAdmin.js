@@ -19,7 +19,10 @@ const initAdmin = async () => {
     const hash = await bcrypt.hash(plainPassword, saltRounds);
 
     await pool.query(
-      "INSERT INTO users (username, password_hash) VALUES ($1, $2) ON CONFLICT (username) DO NOTHING",
+      `INSERT INTO users (username, password_hash) 
+       VALUES ($1, $2) 
+       ON CONFLICT (username) 
+       DO UPDATE SET password_hash = EXCLUDED.password_hash`,
       [username, hash]
     );
 
