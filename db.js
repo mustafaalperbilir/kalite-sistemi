@@ -28,7 +28,8 @@ const createTables = async () => {
 
     try {
         // Eğer tabloyu daha önce 'password' adıyla oluşturduysa, hata almamak için ismini otomatik değiştiriyoruz
-        await pool.query(`ALTER TABLE IF EXISTS users RENAME COLUMN password TO password_hash;`).catch(() => {});
+        
+        //await pool.query(`ALTER TABLE IF EXISTS users RENAME COLUMN password TO password_hash;`).catch(() => {});
         
         await pool.query(queryText);
         console.log('✅ Veritabanı tabloları hazır!');
