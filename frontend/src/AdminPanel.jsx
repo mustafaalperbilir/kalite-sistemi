@@ -133,7 +133,7 @@ const AdminPanel = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = editId ? `${API_URL}/api/accreditations/${editId}` : `${API_URL}/api/accreditations`;
+      const url = editId ? `/api/accreditations/${editId}` : `/api/accreditations`;
       const method = editId ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
