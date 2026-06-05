@@ -6,5 +6,11 @@ export default defineConfig({
   base: '/',
   build: {
     assetsDir: '',
+    rollupOptions: {
+      output: {
+        entryFileNames: `[name]-[hash].mjs`,
+        chunkFileNames: `[name]-[hash].mjs`,
+      }
+    }
   }
 })
